@@ -56,10 +56,16 @@ class Player {
         this.speed = PLAYER_SPEED;
         this.score = 0;
         this.isAlive = true;
+        this.gameStartTime = null;
     }
 
     incrementScore() {
-        this.score += 1;
+        if (this.gameStartTime === null) {
+            this.gameStartTime = performance.now();
+        }
+        const currentTime = performance.now();
+        const elapsedSeconds = Math.floor((currentTime - this.gameStartTime) / 1000);
+        this.score = elapsedSeconds;
     }
 
     movePlayer(deltaTime) {
@@ -91,6 +97,7 @@ class Player {
         this.x = PLAYER_START_X;
         this.y = PLAYER_START_Y;
         this.isAlive = true;
+        this.gameStartTime = null;
     }
 }
 
@@ -136,8 +143,6 @@ class FallingBlocks {
                 this.blocks[i].y = 0;
                 this.blocks[i].x = getRandomX();
                 this.blocks[i].speed = getRandomSpeed();
-
-                player.incrementScore(); // increment score when each blocks passes by
             }
         }
     }
@@ -209,6 +214,8 @@ function gameLoop(timestamp) {
         fallingBlocks.updatePosition(deltaTime);
         
         detectCollision();
+        
+        player.incrementScore(); // Update score based on elapsed time
         
         renderScore();
 
