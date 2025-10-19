@@ -1,4 +1,4 @@
-## Try it here: https://extraordinary-llama-fa671a.netlify.app/
+## Try it here: https://falling-object-game-js.netlify.app
 
 # Falling Objects
 
